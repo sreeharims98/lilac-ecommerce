@@ -8,7 +8,7 @@ import Carousel from "../../components/Carousel";
 
 function Home() {
   return (
-    <>
+    <div className="bg-[#E5E5E5]">
       <Header />
       <Navbar />
       <Carousel />
@@ -16,7 +16,7 @@ function Home() {
       <ClassifiedProds />
       <NewsLetter />
       <Footer />
-    </>
+    </div>
   );
 }
 

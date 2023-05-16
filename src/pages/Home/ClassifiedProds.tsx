@@ -6,7 +6,7 @@ import ClassifiedProductCard from "../../components/ClassifiedProductCard";
 
 function ClassifiedProds() {
   return (
-    <div className="bg-[#E5E5E5] pl-20 py-16 flex gap-12">
+    <div className="bg-[#E5E5E5] pl-20 py-20 flex gap-12">
       <div className="flex flex-col items-center justify-center gap-8 w-60">
         <span className="font-semibold text-3xl text-black text-center">
           Classified Products on the week

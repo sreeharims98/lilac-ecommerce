@@ -2,7 +2,7 @@ import ProductCard from "../../components/ProductCard";
 
 function BestDeals() {
   return (
-    <div className="px-20 py-14">
+    <div className="p-20 bg-white">
       <div className="flex items-center justify-between w-full mb-8">
         <span className="font-semibold text-[30px] text-black">Best Deals</span>
         <span className="font-semibold text-[20px] text-primaryColor">

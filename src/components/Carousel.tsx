@@ -16,7 +16,7 @@ function Carousel() {
   };
 
   return (
-    <div>
+    <div className="py-20">
       <Slider {...settings}>
         <div className="px-4">
           <CarouselComp />

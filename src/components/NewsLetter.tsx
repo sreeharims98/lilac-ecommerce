@@ -5,7 +5,7 @@ import Subscribe from "./inputs/Subscribe";
 
 function NewsLetter() {
   return (
-    <div className="bg-primaryColor px-20 py-16 flex items-center justify-between gap-4">
+    <div className="bg-primaryColor p-20 flex items-center justify-between gap-4">
       <img src={newsletter} alt="" className="w-[116px] h-[102px]" />
       <div className="flex flex-col gap-6 w-2/6">
         <div className="relative w-fit">
