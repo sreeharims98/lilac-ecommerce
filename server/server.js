@@ -4,7 +4,6 @@ import cors from "cors";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import { config } from "./config/index.js";
 import { productRoute } from "./routes/productRoute.js";
-import { userRoute } from "./routes/userRoute.js";
 import { cartRoute } from "./routes/cartRoute.js";
 
 const app = express();
@@ -19,7 +18,6 @@ app.get("/", (req, res) => {
 });
 
 //
-app.use("/api/user", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);
 

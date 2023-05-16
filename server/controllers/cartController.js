@@ -1,6 +1,5 @@
 import { cartModel } from "../models/cartModel.js";
 import { productModel } from "../models/productModel.js";
-import { userModel } from "../models/userModel.js";
 
 export const getCartItems = async (req, res) => {
   const userId = req.params.userId;
@@ -20,10 +19,10 @@ export const addItemToCart = async (req, res) => {
   const { productId, quantity } = req.body;
 
   try {
-    const user = await userModel.findById(userId);
     const product = await productModel.findById(productId);
-    if (!user || !product) {
-      return res.status(404).json({ error: "User or product not found" });
+    //check if product is there
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
     }
 
     //product stock should be more than the quantity user is adding
@@ -55,11 +54,18 @@ export const addItemToCart = async (req, res) => {
         cart.items.push({ product: productId, quantity });
       }
 
+      //if quantity is zero remove item from cart
+      if (quantity === 0 && existingItem) {
+        cart.items = cart.items.filter(
+          (item) => item.product !== existingItem.product
+        );
+      }
+
       await cart.save();
     }
 
     res.json(cart);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "Something went wrong!" });
   }
 };

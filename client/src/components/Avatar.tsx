@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { login, logout } from "../store/authSlice";
-import { useCallback } from "react";
 
 const provider = new GoogleAuthProvider();
 
@@ -13,21 +12,23 @@ function Avatar() {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
 
-  const handleAuth = useCallback(() => {
+  const handleAuth = () => {
     if (user) {
       dispatch(logout());
+      toast.success(`Logged out succussfully`);
     } else {
       signInWithPopup(auth, provider)
         .then((result) => {
           const { displayName, email, photoURL, uid } = result.user;
           dispatch(login({ displayName, email, photoURL, uid }));
+          toast.success(`Logged in as ${displayName}`);
         })
         .catch((error) => {
           console.log(error);
           toast.error("Somethng went wrong!");
         });
     }
-  }, [dispatch, user]);
+  };
 
   return (
     <div onClick={handleAuth}>
