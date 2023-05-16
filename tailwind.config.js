@@ -8,6 +8,7 @@ export default {
         secondaryColor: "#4D4D4D",
         ternaryColor: "#8D8D8D",
         bgColor: "#F8F8F8",
+        cyanColor: "#00C6D7",
       },
       // fontFamily: {
       //   Poppins: ["Poppins", "sans-serif"],
