@@ -42,7 +42,10 @@ function Navbar() {
         <Select text="All Categories" size="small" />
         <div className="flex items-center gap-8">
           {allCategories.map((category) => (
-            <span className="text-secondaryColor text-base font-normal">
+            <span
+              key={category}
+              className="text-secondaryColor text-base font-normal"
+            >
               {category}
             </span>
           ))}

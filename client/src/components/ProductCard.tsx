@@ -27,8 +27,8 @@ function ProductCard({
           </span>
           <div className="flex">
             <div className="flex">
-              {[...Array(rating)].map((v) => (
-                <img src={star} alt="" />
+              {[...Array(rating)].map((v, i) => (
+                <img key={i} src={star} alt="" />
               ))}
             </div>
             <span className="text-ternaryColor text-base font-normal">
