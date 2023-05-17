@@ -48,7 +48,7 @@ function ProductCard({ product, showDesc, clickable }: ProductCardProps) {
           <div className="flex">
             <div className="flex">
               {[...Array(product.rating)].map((v, i) => (
-                <img key={i} src={star} alt="" />
+                <img key={i} src={star} alt={v} />
               ))}
             </div>
             <span className="text-ternaryColor text-base font-normal">

@@ -32,6 +32,7 @@ function ProductQuantity({
           [...Array(stock)].map((s, i) => (
             <option value={i + 1} key={i}>
               {i + 1}
+              {s}
             </option>
           ))
         ) : (
