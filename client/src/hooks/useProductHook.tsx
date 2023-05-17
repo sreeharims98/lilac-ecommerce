@@ -13,8 +13,8 @@ function useProductHook() {
 
   //get all products
   const getAllProducts = async () => {
-    dispatch(setLoading(true));
     try {
+      dispatch(setLoading(true));
       const allProducts = await productServices.getAllProducts();
       dispatch(setAllProducts(allProducts));
     } catch (error: any) {
@@ -25,9 +25,8 @@ function useProductHook() {
 
   //get cart items
   const getCartItems = async (userId: string) => {
-    dispatch(setLoading(true));
-
     try {
+      dispatch(setLoading(true));
       const cartItems = await productServices.getCartItems(userId);
       dispatch(setCartItems(cartItems?.items));
     } catch (error: any) {
@@ -49,6 +48,7 @@ function useProductHook() {
     onCloseModal?: () => void;
   }) => {
     try {
+      dispatch(setLoading(true));
       const cartItems = await productServices.addToCart({
         userId,
         productId,

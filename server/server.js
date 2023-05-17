@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
   res.send("Hello, This is Lilac Ecommerce backend!");
 });
 
-//
+//apis
 app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);
 
