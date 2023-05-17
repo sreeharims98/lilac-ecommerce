@@ -9,8 +9,9 @@ import Avatar from "./Avatar";
 import Button from "./Button";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
-import { getCartItems, onOpenCart } from "../store/productSlice";
+import { onOpenCart } from "../store/productSlice";
 import { useEffect } from "react";
+import useProductHook from "../hooks/useProductHook";
 
 const allCategories = [
   "Books",
@@ -28,6 +29,7 @@ const allCategories = [
 
 function Navbar() {
   const dispatch = useDispatch<AppDispatch>();
+  const { getCartItems } = useProductHook();
 
   const { cartItems } = useSelector((state: RootState) => state.product);
   const { user } = useSelector((state: RootState) => state.auth);
@@ -38,7 +40,7 @@ function Navbar() {
 
   useEffect(() => {
     if (user) {
-      dispatch(getCartItems(user?.uid));
+      getCartItems(user?.uid);
     }
   }, [user]);
 

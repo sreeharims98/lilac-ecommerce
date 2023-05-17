@@ -1,17 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ProductCard from "../../components/ProductCard";
-import { AppDispatch, RootState } from "../../store";
+import { RootState } from "../../store";
 import { useEffect } from "react";
-import { getAllProducts } from "../../store/productSlice";
 import ProductModal from "../../components/modals/ProductModal";
 import CartModal from "../../components/modals/CartModal";
+import useProductHook from "../../hooks/useProductHook";
 
 function BestDeals() {
-  const dispatch = useDispatch<AppDispatch>();
+  const { getAllProducts } = useProductHook();
+
   const { products } = useSelector((state: RootState) => state.product);
 
   useEffect(() => {
-    dispatch(getAllProducts(""));
+    getAllProducts();
   }, []);
 
   return (

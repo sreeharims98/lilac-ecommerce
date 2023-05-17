@@ -1,11 +1,9 @@
 import { CartState, ProductState, UserState } from "../types";
 import ProductCard from "./ProductCard";
-import { addToCart } from "../store/productSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../store";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import Button from "./Button";
-import ProductQuantity from "./productQuantity";
+import ProductQuantity from "./ProductQuantity";
+import useProductHook from "../hooks/useProductHook";
 // import removeIco from "../assets/icons/remove.svg";
 
 interface CartProductProps {
@@ -15,28 +13,21 @@ interface CartProductProps {
 }
 
 function CartProduct({ item, user, loading }: CartProductProps) {
-  const dispatch = useDispatch<AppDispatch>();
-
-  const [quantity, setQuantity] = useState(item.quantity);
+  const { addToCart } = useProductHook();
 
   const onRemoveProduct = (product: ProductState) => {
     if (user) {
-      dispatch(
-        addToCart({ userId: user?.uid, productId: product._id, quantity: 0 })
-      );
+      addToCart({ userId: user?.uid, productId: product._id, quantity: 0 });
     }
   };
 
   const onChangeQuantity = useCallback((value: number) => {
     if (user) {
-      setQuantity(value);
-      dispatch(
-        addToCart({
-          userId: user?.uid,
-          productId: item.product._id,
-          quantity: value,
-        })
-      );
+      addToCart({
+        userId: user?.uid,
+        productId: item.product._id,
+        quantity: value,
+      });
     }
   }, []);
 
@@ -48,12 +39,16 @@ function CartProduct({ item, user, loading }: CartProductProps) {
           showDesc={false}
           clickable={false}
         />
-        <div className="flex justify-between flex-col">
+        <div className="flex justify-between flex-col gap-0">
           <ProductQuantity
             stock={item.product.stock}
-            quantity={quantity}
+            quantity={item.quantity}
             onChangeQuantity={onChangeQuantity}
+            disabled={true}
           />
+          {/* <div className="text-center p-2">
+            Stocks left: &nbsp;<strong>{item.product.stock - quantity}</strong>
+          </div> */}
           <Button
             onClick={() => onRemoveProduct(item.product)}
             text="Remove"

@@ -5,7 +5,6 @@ import { AppDispatch, RootState } from "../../store";
 import { onCloseCart } from "../../store/productSlice";
 
 import CartProduct from "../CartProduct";
-import Button from "../Button";
 
 const CartModal = () => {
   const dispatch = useDispatch<AppDispatch>();

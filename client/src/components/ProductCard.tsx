@@ -20,8 +20,10 @@ function ProductCard({ product, showDesc, clickable }: ProductCardProps) {
 
   return (
     <div
-      onClick={() => (clickable ? handleClick() : null)}
-      className="flex items-center justify-center gap-4 cursor-pointer"
+      onClick={() => (clickable && product.stock > 0 ? handleClick() : null)}
+      className={`flex items-center justify-center gap-4 
+      ${product.stock > 0 ? "cursor-pointer" : "cursor-not-allowed "}
+      `}
     >
       <img
         src={product.image}
@@ -36,7 +38,9 @@ function ProductCard({ product, showDesc, clickable }: ProductCardProps) {
             {product.description}
           </span>
         )}
-
+        {/* <span className="text-ternaryColor text-sm font-normal">
+          {product.stock}
+        </span> */}
         <div className="flex flex-col justify-between gap-2">
           <span className="text-primaryColor text-xl font-semibold">
             ${product.price}

@@ -31,6 +31,7 @@ export const addItemToCart = async (req, res) => {
         .json({ error: "Quantity more than stock of product" });
     }
 
+    //get cart of the user
     let cart = await cartModel.findOne({ user: userId });
 
     if (!cart) {
@@ -39,6 +40,11 @@ export const addItemToCart = async (req, res) => {
         user: userId,
         items: [{ product: productId, quantity }],
       });
+      // Reduce the stock of the product by the requested quantity
+      product.stock = product.stock - quantity;
+
+      // Save the updated product and cart
+      await product.save();
     } else {
       // Check if the product is already in the cart
       const existingItem = cart.items.find(
@@ -46,18 +52,34 @@ export const addItemToCart = async (req, res) => {
       );
 
       if (existingItem) {
-        // If the product is already in the cart, update the quantity
-        existingItem.quantity = quantity;
+        //if quantity is zero
+        if (quantity === 0) {
+          //add prev quantity to stock
+          const oldQuantity = existingItem.quantity;
+          product.stock = product.stock + oldQuantity;
+          //remove from cart
+          cart.items = cart.items.filter(
+            (item) => item.product !== existingItem.product
+          );
+          // Save the updated product and cart
+          await product.save();
+        } else {
+          // If the product is already in the cart, update the quantity
+          existingItem.quantity = existingItem.quantity + quantity;
+          product.stock = product.stock - quantity;
+
+          // Save the updated product and cart
+          await product.save();
+        }
       } else {
         // If the product is not in the cart, add a new item
         cart.items.push({ product: productId, quantity });
-      }
 
-      //if quantity is zero remove item from cart
-      if (quantity === 0 && existingItem) {
-        cart.items = cart.items.filter(
-          (item) => item.product !== existingItem.product
-        );
+        //Reduce the stock of the product by the requested quantity
+        product.stock = product.stock - quantity;
+
+        // Save the updated product and cart
+        await product.save();
       }
 
       await cart.save();

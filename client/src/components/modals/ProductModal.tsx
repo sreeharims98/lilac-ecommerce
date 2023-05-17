@@ -2,14 +2,16 @@ import { useCallback, useState } from "react";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { addToCart, onCloseProduct } from "../../store/productSlice";
+import { onCloseProduct } from "../../store/productSlice";
 import ProductCard from "../ProductCard";
 import Button from "../Button";
 import { toast } from "react-toastify";
-import ProductQuantity from "../productQuantity";
+import ProductQuantity from "../ProductQuantity";
+import useProductHook from "../../hooks/useProductHook";
 
 const ProductModal = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { addToCart } = useProductHook();
 
   const { user } = useSelector((state: RootState) => state.auth);
   const { isOpenProduct, selectedProduct, loading } = useSelector(
@@ -31,14 +33,12 @@ const ProductModal = () => {
     try {
       if (user) {
         if (selectedProduct?._id) {
-          dispatch(
-            addToCart({
-              userId: user?.uid,
-              productId: selectedProduct?._id,
-              quantity,
-              onCloseModal,
-            })
-          );
+          addToCart({
+            userId: user?.uid,
+            productId: selectedProduct?._id,
+            quantity,
+            onCloseModal,
+          });
         } else {
           toast.warning("Product not selected!");
         }
@@ -64,6 +64,7 @@ const ProductModal = () => {
               stock={selectedProduct.stock}
               quantity={quantity}
               onChangeQuantity={onChangeQuantity}
+              disabled={false}
             />
             <Button text="Add to Cart" onClick={onSubmit} disabled={loading} />
           </div>
