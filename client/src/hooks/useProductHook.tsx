@@ -2,21 +2,41 @@ import { useDispatch } from "react-redux";
 import productServices from "../services/productServices";
 import { toast } from "react-toastify";
 import { AppDispatch } from "../store";
-import { setAllProducts, setCartItems } from "../store/productSlice";
+import {
+  setAllProducts,
+  setCartItems,
+  setLoading,
+} from "../store/productSlice";
 
 function useProductHook() {
   const dispatch = useDispatch<AppDispatch>();
 
+  //get all products
   const getAllProducts = async () => {
-    const allProducts = await productServices.getAllProducts();
-    dispatch(setAllProducts(allProducts));
+    dispatch(setLoading(true));
+    try {
+      const allProducts = await productServices.getAllProducts();
+      dispatch(setAllProducts(allProducts));
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
+    dispatch(setLoading(false));
   };
 
+  //get cart items
   const getCartItems = async (userId: string) => {
-    const cartItems = await productServices.getCartItems(userId);
-    dispatch(setCartItems(cartItems?.items));
+    dispatch(setLoading(true));
+
+    try {
+      const cartItems = await productServices.getCartItems(userId);
+      dispatch(setCartItems(cartItems?.items));
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
+    dispatch(setLoading(false));
   };
 
+  //add to cart
   const addToCart = async ({
     userId,
     productId,
@@ -28,21 +48,26 @@ function useProductHook() {
     quantity: number;
     onCloseModal?: () => void;
   }) => {
-    const cartItems = await productServices.addToCart({
-      userId,
-      productId,
-      quantity,
-    });
+    try {
+      const cartItems = await productServices.addToCart({
+        userId,
+        productId,
+        quantity,
+      });
 
-    if (quantity === 0) {
-      toast.success("Item removed from cart!");
-    } else {
-      toast.success("Item added to cart!");
+      if (quantity === 0) {
+        toast.success("Item removed from cart!");
+      } else {
+        toast.success("Item added to cart!");
+      }
+      if (cartItems && onCloseModal) {
+        onCloseModal();
+      }
+      dispatch(setCartItems(cartItems?.items));
+    } catch (error: any) {
+      toast.error(error?.message);
     }
-    if (cartItems && onCloseModal) {
-      onCloseModal();
-    }
-    dispatch(setCartItems(cartItems?.items));
+    dispatch(setLoading(false));
     getAllProducts();
   };
 

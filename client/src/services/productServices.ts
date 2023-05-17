@@ -1,14 +1,21 @@
-import { ProductState } from "../types";
 import { Axios } from "../config/axios";
 
-const getAllProducts = async (): Promise<ProductState[]> => {
-  const { data } = await Axios.get("/products");
-  return data;
+const getAllProducts = async () => {
+  try {
+    const { data } = await Axios.get("/products");
+    return data;
+  } catch (error: any) {
+    throw new Error(error?.response?.data?.message);
+  }
 };
 
 const getCartItems = async (userId: string) => {
-  const { data } = await Axios.get(`/cart/${userId}`);
-  return data;
+  try {
+    const { data } = await Axios.get(`/cart/${userId}`);
+    return data;
+  } catch (error: any) {
+    throw new Error(error?.response?.data?.message);
+  }
 };
 
 const addToCart = async (val: {
@@ -16,11 +23,15 @@ const addToCart = async (val: {
   productId: string;
   quantity: number;
 }) => {
-  const { data } = await Axios.post(`/cart/${val.userId}`, {
-    productId: val.productId,
-    quantity: val.quantity,
-  });
-  return data;
+  try {
+    const { data } = await Axios.post(`/cart/${val.userId}`, {
+      productId: val.productId,
+      quantity: val.quantity,
+    });
+    return data;
+  } catch (error: any) {
+    throw new Error(error?.response?.data?.message);
+  }
 };
 
 const productServices = {

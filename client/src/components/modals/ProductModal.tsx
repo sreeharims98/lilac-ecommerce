@@ -51,9 +51,9 @@ const ProductModal = () => {
   };
 
   const bodyContent = (
-    <div className="flex flex-col gap-4">
+    <>
       {selectedProduct && (
-        <>
+        <div className="flex flex-col gap-4">
           <ProductCard
             product={selectedProduct}
             showDesc={true}
@@ -68,9 +68,9 @@ const ProductModal = () => {
             />
             <Button text="Add to Cart" onClick={onSubmit} disabled={loading} />
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 
   return (

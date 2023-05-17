@@ -21,7 +21,7 @@ function ProductCard({ product, showDesc, clickable }: ProductCardProps) {
   return (
     <div
       onClick={() => (clickable && product.stock > 0 ? handleClick() : null)}
-      className={`flex items-center justify-center gap-4 
+      className={`flex items-center gap-4 
       ${product.stock > 0 ? "cursor-pointer" : "cursor-not-allowed "}
       `}
     >
