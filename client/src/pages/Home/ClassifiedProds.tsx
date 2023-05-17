@@ -24,28 +24,28 @@ function ClassifiedProds() {
       <div className="flex gap-12 overflow-hidden">
         <ClassifiedProductCard
           image="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          name="Super Boost Headphones"
+          name="Camera"
           price={220}
           location="Cape Hadstone"
           isUrgentSelling={true}
         />
         <ClassifiedProductCard
           image="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          name="Super Boost Headphones"
+          name="Camera"
           price={220}
           location="Cape Hadstone"
           isUrgentSelling={false}
         />
         <ClassifiedProductCard
           image="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          name="Super Boost Headphones"
+          name="Camera"
           price={220}
           location="Cape Hadstone"
           isUrgentSelling={true}
         />
         <ClassifiedProductCard
           image="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          name="Super Boost Headphones"
+          name="Camera"
           price={220}
           location="Cape Hadstone"
           isUrgentSelling={false}

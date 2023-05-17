@@ -3,7 +3,6 @@ import { productModel } from "../models/productModel.js";
 
 export const getCartItems = async (req, res) => {
   const userId = req.params.userId;
-  console.log(userId);
   try {
     const cart = await cartModel
       .findOne({ user: userId })
@@ -26,7 +25,7 @@ export const addItemToCart = async (req, res) => {
     }
 
     //product stock should be more than the quantity user is adding
-    if (product.stock <= quantity) {
+    if (product.stock < quantity) {
       return res
         .status(404)
         .json({ error: "Quantity more than stock of product" });
@@ -64,7 +63,10 @@ export const addItemToCart = async (req, res) => {
       await cart.save();
     }
 
-    res.json(cart);
+    const allCart = await cartModel
+      .findOne({ user: userId })
+      .populate("items.product");
+    res.json(allCart);
   } catch (error) {
     res.status(500).json({ error: "Something went wrong!" });
   }

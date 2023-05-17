@@ -1,38 +1,54 @@
 import star from "../assets/icons/star.svg";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store";
+import { onOpenProduct, setSelectedProduct } from "../store/productSlice";
+import { ProductState } from "../types";
 
 interface ProductCardProps {
-  image: string;
-  name: string;
-  price: number;
-  rating: number;
-  totalRating: number;
+  product: ProductState;
+  showDesc: boolean;
+  clickable: boolean;
 }
 
-function ProductCard({
-  image,
-  name,
-  price,
-  rating,
-  totalRating,
-}: ProductCardProps) {
+function ProductCard({ product, showDesc, clickable }: ProductCardProps) {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleClick = () => {
+    dispatch(onOpenProduct());
+    dispatch(setSelectedProduct(product));
+  };
+
   return (
-    <div className="flex items-center justify-center gap-4">
-      <img src={image} alt="" className="w-28 h-36 rounded-2xl object-cover" />
+    <div
+      onClick={() => (clickable ? handleClick() : null)}
+      className="flex items-center justify-center gap-4 cursor-pointer"
+    >
+      <img
+        src={product.image}
+        alt=""
+        className="w-28 h-36 rounded-2xl object-cover"
+      />
 
       <div className="flex flex-col justify-between h-full">
-        <span className="text-black text-sm font-normal">{name}</span>
+        <span className="text-black text-sm font-normal">{product.name}</span>
+        {showDesc && (
+          <span className="text-ternaryColor text-sm font-normal">
+            {product.description}
+          </span>
+        )}
+
         <div className="flex flex-col justify-between gap-2">
           <span className="text-primaryColor text-xl font-semibold">
-            ${price}
+            ${product.price}
           </span>
           <div className="flex">
             <div className="flex">
-              {[...Array(rating)].map((v, i) => (
+              {[...Array(product.rating)].map((v, i) => (
                 <img key={i} src={star} alt="" />
               ))}
             </div>
             <span className="text-ternaryColor text-base font-normal">
-              ({totalRating})
+              ({product.totalRating})
             </span>
           </div>
         </div>

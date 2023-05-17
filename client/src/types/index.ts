@@ -1,3 +1,10 @@
+export interface UserState {
+  displayName: string;
+  email: string;
+  photoURL: string;
+  uid: string;
+}
+
 export interface ProductState {
   description: string;
   image: string;
@@ -6,5 +13,11 @@ export interface ProductState {
   rating: number;
   stock: number;
   totalRating: number;
+  _id: string;
+}
+
+export interface CartState {
+  product: ProductState;
+  quantity: number;
   _id: string;
 }

@@ -1,15 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { storage } from "../utils/storageUtils";
 import { STORAGE_KEYS } from "../data/constants";
+import { UserState } from "../types";
 
 interface AuthSliceState {
-  user: {
-    displayName: string;
-    email: string;
-    photoURL: string;
-    uid: string;
-    // token: string;
-  } | null;
+  user: UserState | null;
 }
 
 const user = storage.getItem(STORAGE_KEYS.AUTH);
