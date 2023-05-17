@@ -1,18 +1,16 @@
+import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../../components/ProductCard";
-import { useQuery } from "@tanstack/react-query";
-import { getProducts } from "../../actions/products";
+import { AppDispatch, RootState } from "../../store";
+import { useEffect } from "react";
+import { getAllProducts } from "../../store/productSlice";
 
 function BestDeals() {
-  //get product data
-  const {
-    isLoading,
-    error,
-    data: products,
-    isFetching,
-  } = useQuery({
-    queryKey: ["productData"],
-    queryFn: () => getProducts(),
-  });
+  const dispatch = useDispatch<AppDispatch>();
+  const { products } = useSelector((state: RootState) => state.product);
+
+  useEffect(() => {
+    dispatch(getAllProducts(""));
+  }, []);
 
   return (
     <div className="p-20 bg-white">
